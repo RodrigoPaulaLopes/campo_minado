@@ -23,8 +23,23 @@ public class Field {
     }
 
 
-    boolean addAdjacentFields(Field field){
-        return true;
+    public boolean addAdjacentFields(Field field){
+        var diffLine = line != field.line;
+        var diffColumn = collumn != field.collumn;
+        var diagonal = diffLine && diffColumn;
+        var deltaLine = Math.abs(line - field.line);
+        var deltaColumn = Math.abs(collumn - field.collumn);
+        var deltaGeneral = deltaLine + deltaColumn;
+
+        if(deltaGeneral == 1 && !diagonal){
+            adjacentFields.add(field);
+            return true;
+        }else if(deltaColumn == 2 && diagonal){
+            adjacentFields.add(field);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     
