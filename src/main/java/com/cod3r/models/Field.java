@@ -69,6 +69,9 @@ public class Field {
     public boolean secureAdjacentFields(){
         return this.adjacentFields.stream().noneMatch(field -> !field.mined);
     }
+    public boolean isFlagged(){
+        return this.flagged;
+    }
 
     
 }

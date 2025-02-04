@@ -33,4 +33,15 @@ public class FieldTest {
         
         assertFalse(result);
     }
+
+
+    @Test
+    public void mustReturnFalseIfFieldIsNotFlagged(){
+        assertFalse(field.isFlagged());
+    }
+
+    @Test
+    public void mustReturnTrueIfFieldIsFlagged(){
+        assertTrue(!field.isFlagged());
+    }
 }
