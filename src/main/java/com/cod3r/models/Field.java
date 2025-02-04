@@ -3,6 +3,8 @@ package com.cod3r.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cod3r.exception.ExplosionException;
+
 public class Field {
     
     private final int line;
@@ -11,7 +13,7 @@ public class Field {
 
     private boolean open = false;
     private boolean mined = false;
-    private boolean Flagged = false;
+    private boolean flagged = false;
 
 
     private List<Field> adjacentFields = new ArrayList<Field>();
@@ -40,6 +42,32 @@ public class Field {
         }else{
             return false;
         }
+    }
+
+    public void onFlagged(){
+        if(this.flagged) {
+            this.flagged = !this.flagged;
+        }
+    }
+
+    public boolean open(){
+        if(!this.open && !this.flagged){
+            open = true;
+
+            if(mined){
+                throw new ExplosionException();
+            }
+            if(secureAdjacentFields()){
+                adjacentFields.forEach(field -> field.open());
+            }
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean secureAdjacentFields(){
+        return this.adjacentFields.stream().noneMatch(field -> !field.mined);
     }
 
     
